@@ -28,6 +28,11 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
     <div className="grid grid-cols-1 gap-4 p-2 h-[calc(100vh-32px)] justify-items-start">
       <div className={`grid justify-items-start h-1/2 ${isMobile ? "grid-cols-1 gap-2" : "grid-cols-1 gap-2"}`}>
         <DesktopIcon
+          icon={<Image src="/icons/about.png" width={32} height={32} alt="Projects icon" />}
+          label="About Me"
+          onClick={() => toggleWindow("about")}
+        />
+        <DesktopIcon
           icon={<Image src="/icons/projects.png" width={32} height={32} alt="Projects icon" />}
           label="My Projects"
           onClick={() => toggleWindow("projects")}
@@ -36,11 +41,6 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
           icon={<Image src="/icons/blog.png" width={32} height={32} alt="Projects icon" />}
           label="Blog Posts"
           onClick={() => toggleWindow("blog")}
-        />
-        <DesktopIcon
-          icon={<Image src="/icons/about.png" width={32} height={32} alt="Projects icon" />}
-          label="About Me"
-          onClick={() => toggleWindow("about")}
         />
       </div>
 
@@ -68,24 +68,22 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
             <h2 className="text-lg font-bold mb-4">Recent Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <ProjectCard
-                title="E-Commerce Platform"
-                description="A full-stack e-commerce solution with payment processing and inventory management."
-                tech="React, Node.js, MongoDB"
+                title="vbo-reader"
+                description="A TypeScript library for parsing VBOX (.vbo) data files."
+                tech="Node.js, Typescript"
+                githubUrl="https://github.com/mohamadSherif/vbo-reader"
               />
               <ProjectCard
-                title="Weather App"
-                description="Real-time weather forecasting application with location detection."
-                tech="JavaScript, OpenWeather API"
+                title="Scrapi"
+                description="command-line interface (CLI) that scrapes webpage using AI."
+                tech="Go, OpenAI API"
+                githubUrl="https://github.com/mohamadSherif/scrapi"
               />
               <ProjectCard
-                title="Task Management System"
-                description="Collaborative project management tool with real-time updates."
-                tech="Vue.js, Firebase"
-              />
-              <ProjectCard
-                title="Portfolio Website"
-                description="Personal portfolio website with Windows 95 theme."
-                tech="Next.js, Tailwind CSS"
+                title="Text based chess"
+                description="Chess game built on using java."
+                tech="Java"
+                githubUrl="https://github.com/mohamadSherif/text-based-chess"
               />
             </div>
           </div>
@@ -106,7 +104,7 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
           <div className="p-4 space-y-4">
             <h2 className="text-lg font-bold mb-4">Latest Articles</h2>
             <div className="space-y-4">
-              <BlogPost
+              {/* <BlogPost
                 title="Getting Started with React Hooks"
                 date="March 15, 2023"
                 excerpt="Learn how to use React Hooks to simplify your functional components and manage state effectively."
@@ -125,7 +123,7 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
                 title="Web Development Trends for 2023"
                 date="December 20, 2022"
                 excerpt="Explore the latest trends and technologies that will shape web development in the coming year."
-              />
+              /> */}
             </div>
           </div>
         </Window>
@@ -155,16 +153,20 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
               </div>
             </div>
             <div className="space-y-2">
-              <h2 className="text-lg font-bold">John Doe</h2>
-              <p className="text-sm">Full Stack Developer</p>
+              <h2 className="text-lg font-bold">Mohamad Sherif</h2>
+              <p className="text-sm">Backend Developer</p>
               <p className="text-sm mt-2">
-                I'm a passionate web developer with 5+ years of experience building modern web applications. I
-                specialize in React, Next.js, and Node.js, and I love creating intuitive user interfaces.
+                I am a passionate backend developer with a flair for frontend and AI prompt engineering,
+                bringing over 4 years of experience in building large-scale applications.
               </p>
               <div className="mt-4">
                 <h3 className="text-sm font-bold">Contact:</h3>
-                <p className="text-sm">Email: john.doe@example.com</p>
-                <p className="text-sm">GitHub: github.com/johndoe</p>
+                <p className="text-sm">
+                  Email: <a href="mailto:mjs1342@gmail.com" className="text-blue-800 underline">mjs1342@gmail.com</a>
+                </p>
+                <p className="text-sm">
+                  GitHub: <a href="https://github.com/mohamadSherif" target="_blank" rel="noopener noreferrer" className="text-blue-800 underline">github.com/mohamadSherif</a>
+                </p>
               </div>
             </div>
           </div>
@@ -224,12 +226,40 @@ export function Desktop({ windows, toggleWindow, minimizeWindow, restoreWindow, 
   )
 }
 
-function ProjectCard({ title, description, tech }: { title: string; description: string; tech: string }) {
+function ProjectCard({ 
+  title, 
+  description, 
+  tech, 
+  onClick,
+  githubUrl 
+}: { 
+  title: string; 
+  description: string; 
+  tech: string; 
+  onClick?: () => void;
+  githubUrl?: string;
+}) {
+  const handleClick = () => {
+    if (githubUrl) {
+      window.open(githubUrl, '_blank');
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <div className="border-2 border-gray-400 bg-gray-200 p-3">
+    <div 
+      className="border-2 border-gray-400 bg-gray-200 p-3 cursor-pointer hover:bg-gray-300 transition-colors"
+      onClick={handleClick}
+    >
       <h3 className="font-bold text-sm">{title}</h3>
       <p className="text-xs mt-1">{description}</p>
       <p className="text-xs mt-2 italic">Technologies: {tech}</p>
+      {githubUrl && (
+        <div className="mt-2 text-xs text-blue-800">
+          <span className="underline">View on GitHub</span>
+        </div>
+      )}
     </div>
   )
 }

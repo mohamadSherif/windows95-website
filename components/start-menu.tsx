@@ -13,71 +13,47 @@ import {
   Calendar,
   Trash2,
 } from "lucide-react"
+import Image from "next/image"
 
 interface StartMenuProps {
   onItemClick: () => void
+  onShutDown: () => void
 }
 
-export function StartMenu({ onItemClick }: StartMenuProps) {
+export function StartMenu({ onItemClick, onShutDown }: StartMenuProps) {
   const menuItems = [
     {
-      icon: <Globe className="w-4 h-4 mr-2" />,
-      label: "Internet Explorer",
+      icon: <Image src="/icons/startmenu/programs.png" width={42} height={42} alt="Shut Down" className="mr-1" />,
+      label: "Programs",
       onClick: onItemClick,
     },
     {
-      icon: <Mail className="w-4 h-4 mr-2" />,
-      label: "Outlook Express",
+      icon: <Image src="/icons/startmenu/documents.png" width={42} height={42} alt="Shut Down" className="mr-1" />,
+      label: "Documents",
       onClick: onItemClick,
     },
     {
-      icon: <FolderOpen className="w-4 h-4 mr-2" />,
-      label: "My Projects",
+      icon: <Image src="/icons/startmenu/find.png" width={42} height={42} alt="Shut Down" className="mr-1" />,
+      label: "Find",
       onClick: onItemClick,
     },
     {
-      icon: <FileText className="w-4 h-4 mr-2" />,
-      label: "Blog Posts",
+      icon: <Image src="/icons/startmenu/help.png" width={42} height={42} alt="Shut Down" className="mr-1" />,
+      label: "Help",
       onClick: onItemClick,
     },
     {
-      icon: <User className="w-4 h-4 mr-2" />,
-      label: "About Me",
-      onClick: onItemClick,
-    },
-    {
-      icon: <Trash2 className="w-4 h-4 mr-2" />,
-      label: "Recycle Bin",
-      onClick: onItemClick,
-    },
-    {
-      icon: <Calendar className="w-4 h-4 mr-2" />,
-      label: "Calendar",
+      icon: <Image src="/icons/startmenu/run.png" width={42} height={42} alt="Shut Down" className="mr-1" />,
+      label: "Run",
       onClick: onItemClick,
     },
   ]
 
   const systemItems = [
     {
-      icon: <Settings className="w-4 h-4 mr-2" />,
-      label: "Settings",
-      onClick: onItemClick,
-    },
-    {
-      icon: <Search className="w-4 h-4 mr-2" />,
-      label: "Find",
-      onClick: onItemClick,
-    },
-    {
-      icon: <HelpCircle className="w-4 h-4 mr-2" />,
-      label: "Help",
-      onClick: onItemClick,
-    },
-    {
-      icon: <Power className="w-4 h-4 mr-2" />,
-      label: "Shut Down...",
-      onClick: onItemClick,
-      divider: true,
+      icon: <Image src="/icons/startmenu/shitdown.png" width={42} height={42} alt="Shut Down" className="mr-1" />,
+      label: "Shut Down",
+      onClick: onShutDown,
     },
   ]
 
@@ -85,8 +61,8 @@ export function StartMenu({ onItemClick }: StartMenuProps) {
     <div className="w-64 bg-gray-300 border-2 border-gray-400 shadow-md flex">
       {/* Left sidebar */}
       <div className="w-10 bg-gradient-to-b from-blue-800 to-blue-600 flex flex-col items-center py-2">
-        <div className="h-full w-6 mt-32 -rotate-90 flex items-center justify-center">
-          <span className="text-white text-xs font-bold tracking-widest uppercase w95-text">Windows 95</span>
+        <div className="h-full w-10 mt-32 -rotate-90 flex items-center justify-center">
+          <span className="text-white whitespace-nowrap text-xs font-bold tracking-widest uppercase w95-text">Windows 95</span>
         </div>
       </div>
 
@@ -105,13 +81,11 @@ export function StartMenu({ onItemClick }: StartMenuProps) {
           ))}
         </div>
 
-        <div className="border-t border-gray-400 py-1">
+        <div className="border-t border-gray-400 p-0">
           {systemItems.map((item, index) => (
             <button
               key={index}
-              className={`w-full text-left px-2 py-1 text-xs flex items-center hover:bg-blue-600 hover:text-white w95-text ${
-                item.divider ? "border-t border-gray-400 mt-1 pt-2" : ""
-              }`}
+              className="w-full text-left px-2 py-1 text-xs flex items-center hover:bg-blue-600 hover:text-white w95-text"
               onClick={item.onClick}
             >
               {item.icon}
@@ -123,4 +97,3 @@ export function StartMenu({ onItemClick }: StartMenuProps) {
     </div>
   )
 }
-

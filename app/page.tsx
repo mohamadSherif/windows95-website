@@ -3,8 +3,10 @@
 import { useState } from "react"
 import { Desktop, type WindowState } from "@/components/desktop"
 import { Taskbar } from "@/components/taskbar"
+import { BSOD } from "@/components/bsod"
 
 export default function Home() {
+  const [showBSOD, setShowBSOD] = useState(false)
   const [windows, setWindows] = useState<WindowState[]>([
     { id: "projects", title: "My Projects", isOpen: false, isMinimized: false },
     { id: "blog", title: "Blog Posts", isOpen: false, isMinimized: false },
@@ -33,8 +35,17 @@ export default function Home() {
   // Get only open windows for the taskbar
   const openWindows = windows.filter((win) => win.isOpen)
 
+  const handleShutDown = () => {
+    setShowBSOD(true)
+  }
+  
+  const handleRestart = () => {
+    setShowBSOD(false)
+  }
+
   return (
     <main className="flex min-h-screen flex-col bg-[#008080] overflow-hidden">
+      <BSOD visible={showBSOD} onRestart={handleRestart} />
       <div className="flex-1 relative">
         <Desktop
           windows={windows}
@@ -44,8 +55,7 @@ export default function Home() {
           closeWindow={closeWindow}
         />
       </div>
-      <Taskbar windows={openWindows} onRestore={restoreWindow} />
+      <Taskbar windows={openWindows} onRestore={restoreWindow} onShutDown={handleShutDown} />
     </main>
   )
 }
-

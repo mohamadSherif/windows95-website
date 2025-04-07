@@ -8,9 +8,10 @@ import { useMobile } from "@/hooks/use-mobile"
 interface TaskbarProps {
   windows: WindowState[]
   onRestore: (windowId: string) => void
+  onShutDown: () => void
 }
 
-export function Taskbar({ windows, onRestore }: TaskbarProps) {
+export function Taskbar({ windows, onRestore, onShutDown }: TaskbarProps) {
   const [currentTime, setCurrentTime] = useState<string>("")
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false)
   const startMenuRef = useRef<HTMLDivElement>(null)
@@ -68,7 +69,13 @@ export function Taskbar({ windows, onRestore }: TaskbarProps) {
 
         {isStartMenuOpen && (
           <div ref={startMenuRef} className="absolute bottom-8 left-0">
-            <StartMenu onItemClick={() => setIsStartMenuOpen(false)} />
+            <StartMenu 
+              onItemClick={() => setIsStartMenuOpen(false)}
+              onShutDown={() => {
+                setIsStartMenuOpen(false);
+                onShutDown();
+              }} 
+            />
           </div>
         )}
 
